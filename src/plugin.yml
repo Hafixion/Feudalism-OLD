@@ -1,0 +1,7 @@
+name: Feudalism
+version: 0.00.001
+author: Hafixion
+depend:
+  - Towny
+api-version: 1.16
+main: com.github.hafixion.FeudalismMain
