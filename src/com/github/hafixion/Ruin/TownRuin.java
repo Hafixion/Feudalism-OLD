@@ -1,7 +1,6 @@
 package com.github.hafixion.Ruin;
 
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
-import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
