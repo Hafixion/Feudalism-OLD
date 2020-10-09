@@ -24,9 +24,10 @@ public final class FeudalismMain extends JavaPlugin {
         this.plugin = null;
     }
     public void registerStuff() {
-        //register ruined commands
+        //commands
         this.getCommand("townruin").setExecutor(new DebugIsRuinedCommand());
-        // register ruined towns
+
+        //events
         getServer().getPluginManager().registerEvents(new TownRuin(), this);
     }
 }
