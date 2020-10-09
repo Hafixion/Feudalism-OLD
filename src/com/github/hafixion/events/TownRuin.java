@@ -1,22 +1,21 @@
 package com.github.hafixion.events;
 
+import com.github.hafixion.FeudalismMain;
 import com.palmergames.bukkit.towny.Towny;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.NPC;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 
 public class TownRuin implements Listener {
     public Town town;
     private Towny plugin;
+    public String originalname;
     TownyAdminCommand adminCommand = new TownyAdminCommand(plugin);
-
+    @EventHandler
     public void onTownDelete(PreDeleteTownEvent event) {
         event.setCancelled(true);
         town = event.getTown();
@@ -47,5 +46,13 @@ public class TownRuin implements Listener {
             System.out.println("Problem propogating perm changes to individual plots");
             e.printStackTrace();
         }
+        town.setBoard(town.getName() + " has fallen into ruin!");
+        originalname = town.getName();
+        town.setName("Ruined_Town_of_" + town.getName());
+        town.getMayor().setTitle("Ruined Mayor ");
+        town.setPublic(false);
+        town.setOpen(false);
+        long time = System.currentTimeMillis();
+        FeudalismMain.SaveRuinedTown(town, originalname, time);
     }
 }
