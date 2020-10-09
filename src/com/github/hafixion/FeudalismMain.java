@@ -8,8 +8,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Random;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FeudalismMain<DataFolder> extends JavaPlugin {
     public static File ruinedtown;
@@ -26,10 +28,8 @@ public class FeudalismMain<DataFolder> extends JavaPlugin {
         getServer().getConsoleSender().sendMessage("§6[Feudalism]§7 Plugin Unloaded Successfully.");
     }
 
-    public static void SaveRuinedTown(Town town, String originalname, long time) {
-        Random rand = new Random();
-        int random = rand.nextInt(1000);
-        String ruinedtownstring = originalname + random + ".yml";
+    public static void SaveRuinedTown(Town town, String originalname, long time, String name) {
+        String ruinedtownstring = originalname + ".yml";
         ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         if(!ruinedtown.exists()) {
@@ -49,10 +49,35 @@ public class FeudalismMain<DataFolder> extends JavaPlugin {
         }
         ruinedtowndata.set("time-fallen", time);
         ruinedtowndata.set("original-name", originalname);
+        ruinedtowndata.set("name", name);
         try {
             ruinedtowndata.save(ruinedtown);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void PurgeRuinedTowns() {
+        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
+        File[] ruinedtowns = datafolder.toFile().listFiles();
+        ruinedtowndata = new YamlConfiguration();
+        for(File ruinedtown : ruinedtowns) {
+            try {
+                ruinedtowndata.load(ruinedtown);
+                if(ruinedtowndata.contains("time-fallen")) {
+                    long time = (long) ruinedtowndata.get("time-fallen");
+                    if(System.currentTimeMillis() - time > 86400000) {
+                        TownRuin.deleteRuinedTown((String) ruinedtowndata.get("name"));
+                       ruinedtown.delete();
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidConfigurationException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

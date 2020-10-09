@@ -2,18 +2,21 @@ package com.github.hafixion.events;
 
 import com.github.hafixion.FeudalismMain;
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
+import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-
 public class TownRuin implements Listener {
     public Town town;
     private Towny plugin;
     public String originalname;
+    int random;
     TownyAdminCommand adminCommand = new TownyAdminCommand(plugin);
     @EventHandler
     public void onTownDelete(PreDeleteTownEvent event) {
@@ -53,6 +56,21 @@ public class TownRuin implements Listener {
         town.setPublic(false);
         town.setOpen(false);
         long time = System.currentTimeMillis();
-        FeudalismMain.SaveRuinedTown(town, originalname, time);
+        FeudalismMain.SaveRuinedTown(town, originalname, time, town.getName());
+    }
+    @EventHandler
+    public void onNewDay(NewDayEvent event) {
+        FeudalismMain.ruinedtown.getPath();
+    }
+
+    public static void deleteRuinedTown(String townname) {
+        try {
+            Town ruinedtown = TownyUniverse.getInstance().getDataSource().getTown(townname);
+            adminCommand.parseAdminTownCommand(new String[] {town.getName(), "delete"});
+        } catch (NotRegisteredException e) {
+            e.printStackTrace();
+        } catch (TownyException e) {
+            e.printStackTrace();
+        }
     }
 }
