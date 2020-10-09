@@ -45,5 +45,10 @@ public class FeudalismMain<DataFolder> extends JavaPlugin {
         }
         ruinedtowndata.set("time-fallen", time);
         ruinedtowndata.set("original-name", originalname);
+        try {
+            ruinedtowndata.save(ruinedtown);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
