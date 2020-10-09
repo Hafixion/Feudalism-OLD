@@ -10,3 +10,7 @@ commands:
   townruin:
     description: Checks if town is ruined
     usage: /townruin <town>
+
+  townpurge:
+    description: Purge ruined towns
+    usage: /townpurge
