@@ -9,8 +9,4 @@ main: com.github.hafixion.FeudalismMain
 commands:
   townruin:
     description: Checks if town is ruined
-    usage: /townruin <town>
-
-  townpurge:
-    description: Purge ruined towns
-    usage: /townpurge
+    usage: /townruin <town>/purge

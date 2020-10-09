@@ -12,20 +12,26 @@ public class DebugIsRuinedCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         boolean result = false;
-        if (!(args[0] == null)) {
-            if (args[0] == "purge") {
-                RuinAPI.PurgeRuinedTowns();
-            } else {
-                try {
-                    Resident mayor = TownyUniverse.getInstance().getDataSource().getResident(args[0]);
-                    Town town = mayor.getTown();
-                    result = RuinAPI.isRuined(town);
-                } catch (NotRegisteredException e) {
-                    e.printStackTrace();
+        if (label.equalsIgnoreCase("townruin")) {
+            if (args.length != 0) {
+                if (args[0] == "purge") {
+                    RuinAPI.PurgeExpiredRuinedTowns();
+                    return true;
+                } else {
+                    try {
+                        Resident mayor = TownyUniverse.getInstance().getDataSource().getResident(args[0]);
+                        Town town = mayor.getTown();
+                        result = RuinAPI.isRuined(town);
+                    } catch (NotRegisteredException e) {
+                        e.printStackTrace();
+                    }
+                    sender.sendMessage(String.valueOf(result));
+                    return true;
                 }
-                sender.sendMessage(String.valueOf(result));
+            } else {
+                sender.sendMessage("missing arg!");
             }
         }
-        return true;
+        return false;
     }
 }

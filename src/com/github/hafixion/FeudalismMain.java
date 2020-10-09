@@ -1,7 +1,6 @@
 package com.github.hafixion;
 
 import com.github.hafixion.Ruin.DebugIsRuinedCommand;
-import com.github.hafixion.Ruin.DebugPurgeCommand;
 import com.github.hafixion.Ruin.TownRuin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,7 +26,6 @@ public final class FeudalismMain extends JavaPlugin {
     public void registerStuff() {
         //commands
         this.getCommand("townruin").setExecutor(new DebugIsRuinedCommand());
-        this.getCommand("townpurge").setExecutor(new DebugPurgeCommand());
 
         //events
         getServer().getPluginManager().registerEvents(new TownRuin(), this);
