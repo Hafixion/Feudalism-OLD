@@ -1,32 +1,33 @@
 package com.github.hafixion;
 
-import com.github.hafixion.Ruin.DebugIsRuinedCommand;
+import com.github.hafixion.Ruin.DebugRuinCommands;
+import com.github.hafixion.Ruin.RuinAPI;
 import com.github.hafixion.Ruin.TownRuin;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FeudalismMain extends JavaPlugin {
 
     private static FeudalismMain plugin;
 
-    public static FeudalismMain getPlugin() {
-        return plugin;
+    public static void setPlugin(FeudalismMain plugin) {
+        FeudalismMain.plugin = plugin;
     }
 
     @Override
     public void onEnable() {
         getServer().getConsoleSender().sendMessage("§6[Feudalism]§7 Plugin Loaded Successfully.");
         registerStuff();
-        this.plugin = this;
     }
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage("§6[Feudalism]§7 Plugin Unloaded Successfully.");
-        this.plugin = null;
     }
     public void registerStuff() {
         //commands
-        this.getCommand("townruin").setExecutor(new DebugIsRuinedCommand());
-
+        this.getCommand("townruin").setExecutor(new DebugRuinCommands());
+        //schedules
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L);
         //events
         getServer().getPluginManager().registerEvents(new TownRuin(), this);
     }

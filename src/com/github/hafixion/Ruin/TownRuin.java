@@ -1,23 +1,20 @@
 package com.github.hafixion.Ruin;
 
-import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
 import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class TownRuin implements Listener {
     public static Town town;
-    private static Towny plugin;
-    public String name;
-    static TownyAdminCommand adminCommand = new TownyAdminCommand(plugin);
+    static TownyAdminCommand adminCommand = new TownyAdminCommand(null);
 
     @EventHandler
-    public void onTownDelete(PreDeleteTownEvent event) throws NotRegisteredException {
+    public void onTownDelete(PreDeleteTownEvent event) {
         town = event.getTown();
         if (!town.getMayor().isNPC()) {
             event.setCancelled(true);
@@ -41,11 +38,11 @@ public class TownRuin implements Listener {
                 e.printStackTrace();
             }
             try {
-                TownyAdminCommand adminCommand = new TownyAdminCommand(plugin);
+                TownyAdminCommand adminCommand = new TownyAdminCommand(null);
                 adminCommand.parseAdminTownCommand(new String[]{town.getName(), "set", "perm", "reset"});
 
             } catch (Exception e) {
-                System.out.println("Problem propogating perm changes to individual plots");
+                System.out.println("Problem propagating perm changes to individual plots");
                 e.printStackTrace();
             }
             town.setBoard(town.getName() + " has fallen into ruin!");
@@ -54,20 +51,14 @@ public class TownRuin implements Listener {
             town.setOpen(false);
             long time = System.currentTimeMillis();
             RuinAPI.SaveRuinedTown(town, time);
+            Bukkit.broadcastMessage("§6[Feudalism] §7" + town.getName() + " has become a ruined town.");
         } else {
             event.setCancelled(false);
         }
     }
-    @EventHandler
-    public void onNewDay(NewDayEvent event) {
-        RuinAPI.PurgeExpiredRuinedTowns();
-    }
-
     public static void deleteRuinedTown(Town town) {
         try {
             adminCommand.parseAdminTownCommand(new String[] {town.getName(), "delete"});
-        } catch (NotRegisteredException e) {
-            e.printStackTrace();
         } catch (TownyException e) {
             e.printStackTrace();
         }
