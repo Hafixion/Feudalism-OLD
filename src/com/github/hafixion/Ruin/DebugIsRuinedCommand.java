@@ -14,6 +14,8 @@ public class DebugIsRuinedCommand implements CommandExecutor {
         boolean result = false;
         if (!(args[0] == null)) {
             if (args[0] == "purge") {
+                RuinAPI.PurgeRuinedTowns();
+            } else {
                 try {
                     Resident mayor = TownyUniverse.getInstance().getDataSource().getResident(args[0]);
                     Town town = mayor.getTown();
