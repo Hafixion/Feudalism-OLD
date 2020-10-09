@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class FeudalismMain<DataFolder> extends JavaPlugin {
     public static File ruinedtown;
@@ -26,11 +27,14 @@ public class FeudalismMain<DataFolder> extends JavaPlugin {
     }
 
     public static void SaveRuinedTown(Town town, String originalname, long time) {
-        String ruinedtownstring = originalname + ".yml";
-        ruinedtown = new File("plugins/Feudalism", ruinedtownstring);
+        Random rand = new Random();
+        int random = rand.nextInt(1000);
+        String ruinedtownstring = originalname + random + ".yml";
+        ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         if(!ruinedtown.exists()) {
             try {
+                ruinedtown.mkdirs();
                 ruinedtown.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
