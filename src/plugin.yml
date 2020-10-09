@@ -5,3 +5,8 @@ depend:
   - Towny
 api-version: 1.16
 main: com.github.hafixion.FeudalismMain
+
+commands:
+  townruin:
+    description: Checks if town is ruined
+    usage: /townruin <town>

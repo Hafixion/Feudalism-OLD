@@ -1,6 +1,5 @@
-package com.github.hafixion.events.Ruin;
+package com.github.hafixion.Ruin;
 
-import com.github.hafixion.FeudalismMain;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.event.NewDayEvent;
@@ -8,19 +7,17 @@ import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class TownRuin implements Listener {
     public static Town town;
     private static Towny plugin;
-    public String originalname;
+    public String name;
     static TownyAdminCommand adminCommand = new TownyAdminCommand(plugin);
 
     @EventHandler
-    public void onTownDelete(PreDeleteTownEvent event) {
+    public void onTownDelete(PreDeleteTownEvent event) throws NotRegisteredException {
         town = event.getTown();
         if (!town.getMayor().isNPC()) {
             event.setCancelled(true);
@@ -52,13 +49,11 @@ public class TownRuin implements Listener {
                 e.printStackTrace();
             }
             town.setBoard(town.getName() + " has fallen into ruin!");
-            originalname = town.getName();
-            town.setName("Ruined_Town_of_" + town.getName());
             town.getMayor().setTitle("Ruined Mayor ");
             town.setPublic(false);
             town.setOpen(false);
             long time = System.currentTimeMillis();
-            RuinAPI.SaveRuinedTown(town, originalname, time);
+            RuinAPI.SaveRuinedTown(town, time);
         } else {
             event.setCancelled(false);
         }

@@ -1,6 +1,5 @@
-package com.github.hafixion.events.Ruin;
+package com.github.hafixion.Ruin;
 
-import com.github.hafixion.FeudalismMain;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Town;
@@ -23,17 +22,19 @@ public class RuinAPI {
         Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
-        for(File ruinedtown : ruinedtowns) {
-            try {
-                ruinedtowndata.load(ruinedtown);
+        if (!(ruinedtowns == null)) {
+            for (File ruinedtown : ruinedtowns) {
                 try {
-                    TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
-                    ruinedtown.delete();
-                } catch (NotRegisteredException e) {
+                    ruinedtowndata.load(ruinedtown);
+                    try {
+                        TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
+                        ruinedtown.delete();
+                    } catch (NotRegisteredException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException | InvalidConfigurationException e) {
                     e.printStackTrace();
                 }
-            } catch (IOException | InvalidConfigurationException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -49,7 +50,7 @@ public class RuinAPI {
                 ruinedtowndata.load(ruinedtown);
                 if(ruinedtowndata.contains("time-fallen")) {
                     long time = (long) ruinedtowndata.get("time-fallen");
-                    if(System.currentTimeMillis() - time > 86400000) {
+                    if(System.currentTimeMillis() - time >= 86400000) {
                         try {
                             TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
                             ruinedtown.delete();
@@ -63,27 +64,28 @@ public class RuinAPI {
             }
         }
     }
-    public boolean isRuined(Town town) {
-        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
-        File[] ruinedtowns = datafolder.toFile().listFiles();
+
+    /**
+     * Checks if town is ruined or not
+     * @param town
+     * @return
+     */
+    public static boolean isRuined(Town town) {
+        String ruinedtownstring = town.getName() + ".yml";
+        // file of the inputted town
+        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
-        for (File ruinedtown : ruinedtowns) {
-            try {
-                ruinedtowndata.load(ruinedtown);
-                return ruinedtowndata.get("mayor") == town.getMayor().getName();
-            } catch (IOException | InvalidConfigurationException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
+        boolean result = false;
+        if (townie.exists()) {result = true;}
+        else {result = false;}
+        return result;
     }
     /**
      * Adds a town to the ruined town database
      * @param town town entity
-     * @param originalname original name of the town (before getting ruined)
      * @param time current time (used to count when town will fall)
      */
-    public static void SaveRuinedTown(Town town, String originalname, long time) {
+    public static void SaveRuinedTown(Town town, long time) throws NotRegisteredException {
         String ruinedtownstring = town.getName() + ".yml";
         ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
@@ -101,8 +103,8 @@ public class RuinAPI {
             e.printStackTrace();
         }
         ruinedtowndata.set("time-fallen", time);
-        ruinedtowndata.set("original-name", originalname);
-        ruinedtowndata.set("mayor", town.getMayor());
+        ruinedtowndata.set("name", town.getName());
+        ruinedtowndata.set("mayor", town.getMayor().getName());
         try {
             ruinedtowndata.save(ruinedtown);
         } catch (IOException e) {
