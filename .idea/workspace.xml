@@ -25,8 +25,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b493557e-19f4-4878-a81a-ec4f6a4cdade" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Commands/Debug/DebugCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Commands/Debug/DebugRuinCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Commands/Feudalism.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/stoneskies/feudalism/FeudalismMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/FeudalismMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Ruin/RuinAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Ruin/RuinAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Ruin/DebugRuinCommands.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +66,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -86,6 +92,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="646" y="373" width="702" height="367" key="#Notifications" timestamp="1602321136621">
+      <screen x="85" y="27" width="1835" height="1053" />
+    </state>
+    <state x="646" y="373" width="702" height="367" key="#Notifications/85.27.1835.1053@85.27.1835.1053" timestamp="1602321136621" />
     <state x="506" y="171" key="FileChooserDialogImpl" timestamp="1602199643283">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -94,10 +104,11 @@
       <screen x="85" y="27" width="1835" height="1053" />
     </state>
     <state x="585" y="299" width="824" height="515" key="IDE.errors.dialog/85.27.1835.1053@85.27.1835.1053" timestamp="1602319971327" />
-    <state x="280" y="4" key="SettingsEditor" timestamp="1602199661849">
-      <screen x="0" y="0" width="1600" height="860" />
+    <state x="418" y="54" width="1022" height="737" key="SettingsEditor" timestamp="1602321398924">
+      <screen x="85" y="27" width="1835" height="1053" />
     </state>
     <state x="280" y="4" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1602199661849" />
+    <state x="418" y="54" width="1022" height="737" key="SettingsEditor/85.27.1835.1053@85.27.1835.1053" timestamp="1602321398924" />
     <state x="666" y="252" key="run.anything.popup" timestamp="1602265035470">
       <screen x="85" y="27" width="1835" height="1053" />
     </state>

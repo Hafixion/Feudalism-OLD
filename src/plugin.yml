@@ -7,6 +7,5 @@ api-version: 1.16
 main: com.stoneskies.feudalism.FeudalismMain
 
 commands:
-  townruin:
-    description: Checks if town is ruined
-    usage: /townruin <town>/purge
+  fd:
+    description: The base feudalism command

@@ -1,6 +1,7 @@
 package com.stoneskies.feudalism;
 
-import com.stoneskies.feudalism.Ruin.DebugRuinCommands;
+import com.stoneskies.feudalism.Commands.Feudalism;
+import com.stoneskies.feudalism.Commands.Debug.DebugRuinCommands;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public final class FeudalismMain extends JavaPlugin {
     }
     public void registerStuff() {
         //commands
-        this.getCommand("townruin").setExecutor(new DebugRuinCommands());
+        this.getCommand("fd").setExecutor(new Feudalism());
         //schedules
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L);
         //events
