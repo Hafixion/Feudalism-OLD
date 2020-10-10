@@ -9,4 +9,4 @@ main: com.stoneskies.feudalism.FeudalismMain
 
 commands:
   fd:
-    description: The base feudalism command
+    description: The base Feudalism command
