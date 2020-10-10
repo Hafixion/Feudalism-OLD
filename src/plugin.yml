@@ -4,7 +4,7 @@ author: Hafixion
 depend:
   - Towny
 api-version: 1.16
-main: com.github.hafixion.FeudalismMain
+main: com.stoneskies.feudalism.FeudalismMain
 
 commands:
   townruin:

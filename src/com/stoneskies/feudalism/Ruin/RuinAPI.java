@@ -1,4 +1,4 @@
-package com.github.hafixion.Ruin;
+package com.stoneskies.feudalism.Ruin;
 
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;

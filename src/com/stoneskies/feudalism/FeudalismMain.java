@@ -1,8 +1,8 @@
-package com.github.hafixion;
+package com.stoneskies.feudalism;
 
-import com.github.hafixion.Ruin.DebugRuinCommands;
-import com.github.hafixion.Ruin.RuinAPI;
-import com.github.hafixion.Ruin.TownRuin;
+import com.stoneskies.feudalism.Ruin.DebugRuinCommands;
+import com.stoneskies.feudalism.Ruin.RuinAPI;
+import com.stoneskies.feudalism.Ruin.TownRuin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
