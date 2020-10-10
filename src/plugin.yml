@@ -1,6 +1,6 @@
 name: Feudalism
 version: 0.00.002
-author: Hafixion
+authors: [Hafixion, zydde]
 depend:
   - Towny
 api-version: 1.16
