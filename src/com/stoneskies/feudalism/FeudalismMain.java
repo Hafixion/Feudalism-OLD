@@ -4,6 +4,7 @@ import com.stoneskies.feudalism.Ruin.DebugRuinCommands;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FeudalismMain extends JavaPlugin {
@@ -13,16 +14,15 @@ public final class FeudalismMain extends JavaPlugin {
     public static void setPlugin(FeudalismMain plugin) {
         FeudalismMain.plugin = plugin;
     }
-    public static FeudalismMain getPlugin() { return plugin; }
 
     @Override
     public void onEnable() {
-        getServer().getConsoleSender().sendMessage("§6[Feudalism]§7 Plugin Loaded Successfully.");
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "§6[Feudalism]§7 Plugin loaded successfully!"));
         registerStuff();
     }
     @Override
     public void onDisable() {
-        getServer().getConsoleSender().sendMessage("§6[Feudalism]§7 Plugin Unloaded Successfully.");
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "§6[Feudalism]§7 Plugin unloaded successfully"));
     }
     public void registerStuff() {
         //commands

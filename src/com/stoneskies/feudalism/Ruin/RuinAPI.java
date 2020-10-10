@@ -23,7 +23,7 @@ public class RuinAPI{
      * Purges the entire ruined database.
      */
     public static void PurgeRuinedTowns() {
-        Path datafolder = Paths.get(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns");
+        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
         if (!(ruinedtowns == null)) {
@@ -47,7 +47,7 @@ public class RuinAPI{
      * Purges current expired ruined towns in the database.
      */
     public static void PurgeExpiredRuinedTowns() {
-        Path datafolder = Paths.get(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns");
+        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
         if (ruinedtowns != null) {
@@ -81,7 +81,7 @@ public class RuinAPI{
     public static boolean isRuined(Town town) {
         String ruinedtownstring = town.getName() + ".yml";
         // file of the inputted town
-        File townie = new File(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns", ruinedtownstring);
+        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         boolean result = false;
         if (townie.exists()) {result = true;}
@@ -94,7 +94,7 @@ public class RuinAPI{
      */
     public static void SaveRuinedTown(Town town, long time) {
         String ruinedtownstring = town.getName() + ".yml";
-        ruinedtown = new File(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns", ruinedtownstring);
+        ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         if(!ruinedtown.exists()) {
             try {

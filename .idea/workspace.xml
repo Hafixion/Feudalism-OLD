@@ -25,7 +25,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b493557e-19f4-4878-a81a-ec4f6a4cdade" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/stoneskies/feudalism/FeudalismMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/FeudalismMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Ruin/RuinAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/stoneskies/feudalism/Ruin/RuinAPI.java" afterDir="false" />
     </list>
@@ -91,6 +90,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="506" y="171" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1602199643283" />
+    <state x="585" y="299" width="824" height="515" key="IDE.errors.dialog" timestamp="1602319971327">
+      <screen x="85" y="27" width="1835" height="1053" />
+    </state>
+    <state x="585" y="299" width="824" height="515" key="IDE.errors.dialog/85.27.1835.1053@85.27.1835.1053" timestamp="1602319971327" />
     <state x="280" y="4" key="SettingsEditor" timestamp="1602199661849">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
