@@ -3,7 +3,9 @@ package com.stoneskies.feudalism.Ruin;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Town;
+import com.stoneskies.feudalism.FeudalismMain;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -21,7 +23,7 @@ public class RuinAPI{
      * Purges the entire ruined database.
      */
     public static void PurgeRuinedTowns() {
-        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
+        Path datafolder = Paths.get(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
         if (!(ruinedtowns == null)) {
@@ -29,7 +31,7 @@ public class RuinAPI{
                 try {
                     ruinedtowndata.load(ruinedtown);
                     try {
-                        Bukkit.broadcastMessage("§6[Feudalism] §7" + ruinedtowndata.get("name") + " has finally fallen into history");
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism] &7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                         TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
                         ruinedtown.delete();
                     } catch (NotRegisteredException e) {
@@ -39,13 +41,13 @@ public class RuinAPI{
                     e.printStackTrace();
                 }
             }
-        } else {Bukkit.getConsoleSender().sendMessage("§6[Feudalism]§7 No files found to purge");}
+        } else {Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));}
     }
     /**
      * Purges current expired ruined towns in the database.
      */
     public static void PurgeExpiredRuinedTowns() {
-        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
+        Path datafolder = Paths.get(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
         if (ruinedtowns != null) {
@@ -56,7 +58,7 @@ public class RuinAPI{
                         long time = (long) ruinedtowndata.get("time-fallen");
                         if(System.currentTimeMillis() - time >= 86400000) {
                             try {
-                                Bukkit.broadcastMessage("§6[Feudalism] §7" + ruinedtowndata.get("name") + " has finally fallen into history");
+                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism] &7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                                 TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
                                 ruinedtown.delete();
                             } catch (NotRegisteredException e) {
@@ -68,7 +70,7 @@ public class RuinAPI{
                     e.printStackTrace();
                 }
             }
-        } else {Bukkit.getConsoleSender().sendMessage("§6[Feudalism]§7 No files found to purge");}
+        } else {Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));}
     }
 
     /**
@@ -79,7 +81,7 @@ public class RuinAPI{
     public static boolean isRuined(Town town) {
         String ruinedtownstring = town.getName() + ".yml";
         // file of the inputted town
-        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
+        File townie = new File(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         boolean result = false;
         if (townie.exists()) {result = true;}
@@ -92,7 +94,7 @@ public class RuinAPI{
      */
     public static void SaveRuinedTown(Town town, long time) {
         String ruinedtownstring = town.getName() + ".yml";
-        ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
+        ruinedtown = new File(FeudalismMain.getPlugin().getDataFolder() + "database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         if(!ruinedtown.exists()) {
             try {

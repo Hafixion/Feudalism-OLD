@@ -13,6 +13,7 @@ public final class FeudalismMain extends JavaPlugin {
     public static void setPlugin(FeudalismMain plugin) {
         FeudalismMain.plugin = plugin;
     }
+    public static FeudalismMain getPlugin() { return plugin; }
 
     @Override
     public void onEnable() {
