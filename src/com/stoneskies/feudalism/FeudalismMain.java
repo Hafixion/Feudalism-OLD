@@ -1,7 +1,6 @@
 package com.stoneskies.feudalism;
 
 import com.stoneskies.feudalism.Commands.Feudalism;
-import com.stoneskies.feudalism.Commands.Debug.DebugRuinCommands;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
 import org.bukkit.Bukkit;
@@ -9,9 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FeudalismMain extends JavaPlugin {
-
-    private static FeudalismMain plugin;
-
+    public static FeudalismMain plugin;
     public static void setPlugin(FeudalismMain plugin) {
         FeudalismMain.plugin = plugin;
     }
@@ -19,6 +16,7 @@ public final class FeudalismMain extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "§6[Feudalism]§7 Plugin loaded successfully!"));
+        setPlugin(this);
         registerStuff();
     }
     @Override
@@ -32,5 +30,7 @@ public final class FeudalismMain extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L);
         //events
         getServer().getPluginManager().registerEvents(new TownRuin(), this);
+        //config and settings
+        plugin.saveDefaultConfig();
     }
 }

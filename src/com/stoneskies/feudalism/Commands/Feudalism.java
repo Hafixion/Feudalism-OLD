@@ -17,13 +17,16 @@ public class Feudalism implements CommandExecutor {
                         break;
 
                     default:
-                        sender.sendMessage("invalid arg!");
+                        sender.sendMessage(ChatColor.RED + args[0] + " is not registered");
                         return false;
                 }
             } else {
                 //todo HAF print basic plugin info, something like stoneskies feudalism, its version, repo, authors etc
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&lStoneskies Feudalism"));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "//"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[Stoneskies Feudalism]"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eVersion: 0.00.010"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eAuthors: zydde, Hafixion"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eGithub: https://github.com/Stoneskies/Feudalism"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7A plugin that adds complex war to towny"));
                 return true;
             }
         }

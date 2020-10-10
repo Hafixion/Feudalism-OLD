@@ -14,10 +14,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class RuinAPI{
+public class RuinAPI {
     public static File ruinedtown;
     public static YamlConfiguration ruinedtowndata;
     public static Runnable ExpiredRuinedTownPurge = RuinAPI::PurgeExpiredRuinedTowns;
+    public static Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
 
     /**
      * Purges the entire ruined database.
@@ -41,22 +42,24 @@ public class RuinAPI{
                     e.printStackTrace();
                 }
             }
-        } else {Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));}
+        } else {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));
+        }
     }
+
     /**
      * Purges current expired ruined towns in the database.
      */
     public static void PurgeExpiredRuinedTowns() {
-        Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
         ruinedtowndata = new YamlConfiguration();
         if (ruinedtowns != null) {
-            for(File ruinedtown : ruinedtowns) {
+            for (File ruinedtown : ruinedtowns) {
                 try {
                     ruinedtowndata.load(ruinedtown);
-                    if(ruinedtowndata.contains("time-fallen")) {
+                    if (ruinedtowndata.contains("time-fallen")) {
                         long time = (long) ruinedtowndata.get("time-fallen");
-                        if(System.currentTimeMillis() - time >= 86400000) {
+                        if (System.currentTimeMillis() - time >= FeudalismMain.plugin.getConfig().getLong("time-till-expiration")) {
                             try {
                                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism] &7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                                 TownRuin.deleteRuinedTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
@@ -70,11 +73,14 @@ public class RuinAPI{
                     e.printStackTrace();
                 }
             }
-        } else {Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));}
+        } else {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));
+        }
     }
 
     /**
      * Checks if town is ruined or not
+     *
      * @param town town to check if ruined or not
      * @return Whether town is ruined or not
      */
@@ -84,11 +90,15 @@ public class RuinAPI{
         File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
         boolean result = false;
-        if (townie.exists()) {result = true;}
+        if (townie.exists()) {
+            result = true;
+        }
         return result;
     }
+
     /**
      * Adds a town to the ruined town database
+     *
      * @param town town entity
      * @param time current time (used to count when town will fall)
      */
@@ -96,7 +106,7 @@ public class RuinAPI{
         String ruinedtownstring = town.getName() + ".yml";
         ruinedtown = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
         ruinedtowndata = new YamlConfiguration();
-        if(!ruinedtown.exists()) {
+        if (!ruinedtown.exists()) {
             try {
                 ruinedtown.getParentFile().mkdir();
                 ruinedtown.createNewFile();
