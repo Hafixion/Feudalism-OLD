@@ -25,6 +25,5 @@ public class DebugCommands {
                 sender.sendMessage(ChatInfo.msg("&c" + args[1] + " is not registered"));
                 break;
         }
-        return;
     }
 }

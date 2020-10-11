@@ -18,7 +18,6 @@ public class Feudalism implements CommandExecutor {
                         // set the executor to be the debug commands class
                         DebugCommands.exec(sender, args);
                         break;
-
                     default:
                         // argument invalid
                         sender.sendMessage(ChatInfo.msg("&c" + args[0] + " is not registered"));

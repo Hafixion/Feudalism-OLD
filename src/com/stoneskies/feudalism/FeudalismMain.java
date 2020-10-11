@@ -5,6 +5,7 @@ import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 

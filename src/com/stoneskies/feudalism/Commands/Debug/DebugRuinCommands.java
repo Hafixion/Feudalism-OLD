@@ -44,6 +44,5 @@ public class DebugRuinCommands {
         } else {
             sender.sendMessage(ChatInfo.msg("&cPlease specify an argument!"));
         }
-        return;
     }
 }
