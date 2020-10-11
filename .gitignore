@@ -1,5 +1,7 @@
 out/
 Feudalism.jar
-.idea/uiDesigner.xml
 
 .idea/
+!.idea/artifacts
+!.idea/misc.xml
+!.idea/modules.xml
