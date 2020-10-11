@@ -1,14 +1,15 @@
-package com.stoneskies.feudalism.Ruin;
+package com.stoneskies.feudalism.Objects;
 
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
+import com.stoneskies.feudalism.Interfaces.RuinAPI;
 
 import java.io.File;
 import java.util.List;
 
-import static com.stoneskies.feudalism.Ruin.RuinAPI.*;
+import static com.stoneskies.feudalism.Interfaces.RuinAPI.*;
 
 public class RuinedTown {
     static String name;
@@ -23,7 +24,7 @@ public class RuinedTown {
         }
         return result;
     }
-    
+
     public RuinedTown(String yourString) {
         name = yourString;
     }

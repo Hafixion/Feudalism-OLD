@@ -5,4 +5,6 @@ ruin-enabled: true
 enable-permissions: true
 # time it takes the town to count as expired.
 time-till-expiration: 86400000
+# Whether or not to enable resident reclaimation
+enable-resident-reclaiming: true
 # --------------------

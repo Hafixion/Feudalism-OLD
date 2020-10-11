@@ -2,8 +2,8 @@ package com.stoneskies.feudalism;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.stoneskies.feudalism.Commands.Feudalism;
-import com.stoneskies.feudalism.Ruin.RuinAPI;
-import com.stoneskies.feudalism.Ruin.TownRuin;
+import com.stoneskies.feudalism.Interfaces.RuinAPI;
+import com.stoneskies.feudalism.Listeners.TownRuin;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import me.lucko.commodore.Commodore;
 import me.lucko.commodore.CommodoreProvider;

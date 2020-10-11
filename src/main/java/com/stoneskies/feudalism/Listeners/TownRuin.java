@@ -1,10 +1,11 @@
-package com.stoneskies.feudalism.Ruin;
+package com.stoneskies.feudalism.Listeners;
 
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
+import com.stoneskies.feudalism.Interfaces.RuinAPI;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

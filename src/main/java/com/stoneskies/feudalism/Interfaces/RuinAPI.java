@@ -1,9 +1,10 @@
-package com.stoneskies.feudalism.Ruin;
+package com.stoneskies.feudalism.Interfaces;
 
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
+import com.stoneskies.feudalism.Objects.RuinedTown;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
