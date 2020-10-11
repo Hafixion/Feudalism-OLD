@@ -19,12 +19,15 @@ public class DebugRuinCommands {
                     RuinAPI.PurgeExpiredRuinedTowns();
                 case "mayor":
                     try {
+                        // check mayor's town
                         Resident mayor = TownyUniverse.getInstance().getDataSource().getResident(args[0]);
                        Town town = mayor.getTown();
+                       // return whatever the isRuined(); value of said town is.
                         result = RuinAPI.isRuined(town);
                     } catch (NotRegisteredException e) {
                     e.printStackTrace();
                     }
+                    // send it to the player
                     sender.sendMessage(String.valueOf(result));
                     return true;
             }

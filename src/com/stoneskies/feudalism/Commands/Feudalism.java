@@ -13,15 +13,17 @@ public class Feudalism implements CommandExecutor {
             if(args.length != 0) {
                 switch(args[0]) {
                     case "debug":
+                        // set the executor to be the debug commands class
                         DebugCommands.exec(sender, cmd, label, args);
                         break;
 
                     default:
+                        // argument invalid
                         sender.sendMessage(ChatColor.RED + args[0] + " is not registered");
                         return false;
                 }
             } else {
-                //todo HAF print basic plugin info, something like stoneskies feudalism, its version, repo, authors etc
+                // send plugin information
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&l[Stoneskies Feudalism]"));
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eVersion: 0.00.010"));
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eAuthors: zydde, Hafixion"));

@@ -11,20 +11,25 @@ import org.bukkit.event.Listener;
 
 public class TownRuin implements Listener {
     public static Town town;
-    static TownyAdminCommand adminCommand = new TownyAdminCommand(null);
+    private static final TownyAdminCommand adminCommand = new TownyAdminCommand(null);
+
 
     @EventHandler
     public void onTownDelete(PreDeleteTownEvent event) {
         town = event.getTown();
-        if(FeudalismMain.plugin.getConfig().getBoolean("enabled")) {
+        // if ruined towns in config are enabled
+        if(FeudalismMain.plugin.getConfig().getBoolean("ruin-enabled")) {
+            // if the mayor is npc, helps with ruined town purge
             if (!town.getMayor().isNPC()) {
                 event.setCancelled(true);
+                // make the mayor an npc
                 try {
                     adminCommand.adminSet(new String[]{"mayor", town.getName(), "npc"});
                 } catch (TownyException e) {
                     e.printStackTrace();
                 }
                 if (FeudalismMain.plugin.getConfig().getBoolean("enable-permissions")) {
+                    // if permissions are enabled, set perms to rnao to allow for raiding
                     try {
                         for (String element : new String[]{"residentBuild",
                                 "residentDestroy", "residentSwitch",
@@ -42,6 +47,7 @@ public class TownRuin implements Listener {
                 }
                 try {
                     TownyAdminCommand adminCommand = new TownyAdminCommand(null);
+                    // make all plots have default permission, helps with raids in owned plots.
                     adminCommand.parseAdminTownCommand(new String[]{town.getName(), "set", "perm", "reset"});
                 } catch (Exception e) {
                     System.out.println("Problem propagating perm changes to individual plots");
@@ -51,19 +57,15 @@ public class TownRuin implements Listener {
                 town.getMayor().setTitle("Ruined Mayor ");
                 town.setPublic(false);
                 town.setOpen(false);
+                // save the current time to memory
                 long time = System.currentTimeMillis();
+                // save the ruined town to database
                 RuinAPI.SaveRuinedTown(town, time);
                 Bukkit.broadcastMessage("§6[Feudalism] §7" + town.getName() + " has become a ruined town.");
             } else {
+                // if config ruin-enabled is false don't do anything
                 event.setCancelled(false);
             }
-        }
-    }
-    public static void deleteRuinedTown(Town town) {
-        try {
-            adminCommand.parseAdminTownCommand(new String[] {town.getName(), "delete"});
-        } catch (TownyException e) {
-            e.printStackTrace();
         }
     }
 }
