@@ -15,38 +15,31 @@ public class RuinedTown {
 
     public File getFile() {
         String filename = name + ".yml";
-        File[] ruinedtowns = datafolder.toFile().listFiles();
         File result = null;
         // if database is not empty
-        if (ruinedtowns != null) {
-            for (File ruinedtown : ruinedtowns) {
-                if (ruinedtown.getName().equals(filename)) {
-                    result = ruinedtown;
-                }
-            }
+        if (checkDatabase(filename)) {
+            // return the file
+            result = ruinedtown;
         }
         return result;
     }
-
+    
     public RuinedTown(String yourString) {
         name = yourString;
     }
 
     public void delete() {
         String filename = name + ".yml";
-        File[] ruinedtowns = datafolder.toFile().listFiles();
         // if database is not empty
-        if (ruinedtowns != null) {
-            for (File ruinedtown : ruinedtowns) {
-                if (ruinedtown.getName().equals(filename)) {
-                    try {
-                        deleteTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
-                    } catch (NotRegisteredException e) {
-                        e.printStackTrace();
-                    }
-                    ruinedtown.delete();
-                }
+        if (checkDatabase(filename)) {
+            try {
+                // delete the mayor's town
+                deleteTown(TownyUniverse.getInstance().getDataSource().getResident(ruinedtowndata.getString("mayor")).getTown());
+            } catch (NotRegisteredException e) {
+                e.printStackTrace();
             }
+            // delete the file in the database
+            ruinedtown.delete();
         }
     }
 
@@ -56,19 +49,14 @@ public class RuinedTown {
 
     public Town getTown() {
         String filename = name + ".yml";
-        File[] ruinedtowns = datafolder.toFile().listFiles();
         // if database is not empty
         Town result = null;
-        if (ruinedtowns != null) {
-            for (File ruinedtown : ruinedtowns) {
-                if (ruinedtown.getName().equals(filename)) {
-                    try {
-                        result = TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown();
-                    } catch (NotRegisteredException e) {
-                        e.printStackTrace();
-                        return result;
-                    }
-                }
+        if (RuinAPI.checkDatabase(filename)) {
+            try {
+                // get the mayor's town, normal get town just outputs null
+                result = TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown();
+            } catch (NotRegisteredException e) {
+                e.printStackTrace();
             }
         }
         return result;
@@ -76,18 +64,14 @@ public class RuinedTown {
 
     public List<Resident> getResidents() {
         String filename = name + ".yml";
-        File[] ruinedtowns = datafolder.toFile().listFiles();
         // if database is not empty
         List<Resident> result = null;
-        if (ruinedtowns != null) {
-            for (File ruinedtown : ruinedtowns) {
-                if (ruinedtown.getName().equals(filename)) {
-                    try {
-                        result = TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown().getResidents();
-                    } catch (NotRegisteredException e) {
-                        e.printStackTrace();
-                    }
-                }
+        if (RuinAPI.checkDatabase(filename)) {
+            try {
+                // list the mayor's town's residents
+                result = TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown().getResidents();
+            } catch (NotRegisteredException e) {
+                e.printStackTrace();
             }
         }
         return result;

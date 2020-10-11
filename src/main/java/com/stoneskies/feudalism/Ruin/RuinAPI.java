@@ -1,8 +1,6 @@
 package com.stoneskies.feudalism.Ruin;
 
-import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
-import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
@@ -37,15 +35,10 @@ public class RuinAPI {
             for (File ruinedtown : ruinedtowns) {
                 try {
                     ruinedtowndata.load(ruinedtown);
-                    try {
-                        Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
-                        // get the npc mayor's name inside the database and get his town, then delete it.
-                        deleteTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
-                        // clear the file from the database
-                        ruinedtown.delete();
-                    } catch (NotRegisteredException e) {
-                        e.printStackTrace();
-                    }
+                    Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
+                    // process the deletion
+                    RuinedTown ruinedTown = new RuinedTown(ruinedtowndata.getString("name"));
+                    ruinedTown.delete();
                 } catch (IOException | InvalidConfigurationException e) {
                     e.printStackTrace();
                 }
@@ -71,15 +64,10 @@ public class RuinAPI {
                         long time = (long) ruinedtowndata.get("time-fallen");
                         // calculate if time passed since fallen if greater than the time till expiration
                         if (System.currentTimeMillis() - time >= FeudalismMain.plugin.getConfig().getLong("time-till-expiration")) {
-                            try {
-                                Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
-                                // delete the town
-                                deleteTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
-                                // delete the ruined town from the database
-                                ruinedtown.delete();
-                            } catch (NotRegisteredException e) {
-                                e.printStackTrace();
-                            }
+                            Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
+                            // process the deletion
+                            RuinedTown ruinedTown = new RuinedTown(ruinedtowndata.getString("name"));
+                            ruinedTown.delete();
                         }
                     }
                 } catch (IOException | InvalidConfigurationException e) {
@@ -169,5 +157,15 @@ public class RuinAPI {
             result = true;
         }
         return result;
+    }
+
+    public static boolean checkDatabase(String filename) {
+        File[] ruinedtowns = datafolder.toFile().listFiles();
+        boolean result = false;
+        if (ruinedtowns != null) {
+            for (File ruinedtown : ruinedtowns) {
+                result = ruinedtown.getName().equals(filename);
+            }
+        } return result;
     }
 }
