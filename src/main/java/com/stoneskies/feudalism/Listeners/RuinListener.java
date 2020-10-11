@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class TownRuin implements Listener {
+public class RuinListener implements Listener {
     public static Town town;
     private static final TownyAdminCommand adminCommand = new TownyAdminCommand(null);
 

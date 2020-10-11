@@ -1,7 +1,10 @@
 package com.stoneskies.feudalism.Objects;
 
+import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.Interfaces.RuinAPI;
@@ -27,6 +30,9 @@ public class RuinedTown {
 
     public RuinedTown(String yourString) {
         name = yourString;
+    }
+    public RuinedTown(Town town) {
+        name = town.getName();
     }
 
     public void delete() {
@@ -76,5 +82,54 @@ public class RuinedTown {
             }
         }
         return result;
+    }
+
+    public Nation getNation() {
+        Nation result;
+        try {
+            // get the town's nation
+            result = getTown().getNation();
+        } catch (NotRegisteredException e) {
+            e.printStackTrace();
+            result = null;
+        }
+        return result;
+    }
+
+    public void reclaim(Resident resident) {
+        String filename = name + ".yml";
+        // if database is not empty
+        if (checkDatabase(filename)) {
+            try {
+                // save the old mayor to memory
+                Resident mayor = resident.getTown().getMayor();
+                // set the reclaimer to be the mayor
+                resident.getTown().forceSetMayor(resident);
+                try {
+                    // reset permissions to normal
+                    for (String element : new String[]{"outsiderBuild",
+                            "outsiderDestroy", "outsiderSwitch",
+                            "outsiderItemUse", "allyBuild", "allyDestroy",
+                            "allySwitch", "allyItemUse", "nationBuild", "nationDestroy",
+                            "nationSwitch", "nationItemUse",
+                            "pvp", "fire", "explosion", "mobs"}) {
+                        resident.getTown().getPermissions().set(element, false);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // kick the old mayor
+                mayor.removeTown();
+                // delete the old mayor from the towny db
+                TownyAPI.getInstance().getDataSource().deleteResident(mayor);
+                // set the new board
+                resident.getTown().setBoard(getTown().getName() + "has returned under the leadership of " + mayor.getName());
+
+            } catch (TownyException e) {
+                e.printStackTrace();
+            }
+            // delete the file in the database
+            ruinedtown.delete();
+        }
     }
 }

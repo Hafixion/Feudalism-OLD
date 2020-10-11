@@ -3,7 +3,7 @@ package com.stoneskies.feudalism;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.stoneskies.feudalism.Commands.Feudalism;
 import com.stoneskies.feudalism.Interfaces.RuinAPI;
-import com.stoneskies.feudalism.Listeners.TownRuin;
+import com.stoneskies.feudalism.Listeners.RuinListener;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import me.lucko.commodore.Commodore;
 import me.lucko.commodore.CommodoreProvider;
@@ -48,8 +48,9 @@ public final class FeudalismMain extends JavaPlugin {
         command.setExecutor(new Feudalism());
         //schedules
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L); // schedule for purging expired ruined towns
+
         //events
-        getServer().getPluginManager().registerEvents(new TownRuin(), this); // register ruined town events
+        getServer().getPluginManager().registerEvents(new RuinListener(), this); // register ruined town events
         //config and settings
         if(!configFile.exists()) {
             plugin.saveDefaultConfig();  // if it doesn't exist, save the default one

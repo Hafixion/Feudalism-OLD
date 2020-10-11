@@ -14,6 +14,10 @@ public class Feudalism implements CommandExecutor {
         if(label.equalsIgnoreCase("fd")) {
             if(args.length != 0) {
                 switch(args[0]) {
+                    case "townruin":
+                        // set the executor to be the ruin commands class
+                        RuinCommands.exec(sender, args);
+                        break;
                     case "debug":
                         // set the executor to be the debug commands class
                         DebugCommands.exec(sender, args);

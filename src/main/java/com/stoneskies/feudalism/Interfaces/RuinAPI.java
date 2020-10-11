@@ -1,7 +1,10 @@
 package com.stoneskies.feudalism.Interfaces;
 
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
+import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
 import com.stoneskies.feudalism.Objects.RuinedTown;
@@ -14,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class RuinAPI {
     public static File ruinedtown;
@@ -168,5 +172,19 @@ public class RuinAPI {
                 result = ruinedtown.getName().equals(filename);
             }
         } return result;
+    }
+
+    public static void clearNPCs() {
+        // get a list of the residents in the towny db
+        List<Resident> residentList = TownyUniverse.getInstance().getDataSource().getResidents();
+        // get an array out of the above list
+        Resident[] residents = residentList.toArray(new Resident[0]);
+        for(Resident resident : residents) {
+            // if resident is npc
+            if(resident.isNPC()) {
+                // delete them
+                TownyAPI.getInstance().getDataSource().deleteResident(resident);
+            }
+        }
     }
 }
