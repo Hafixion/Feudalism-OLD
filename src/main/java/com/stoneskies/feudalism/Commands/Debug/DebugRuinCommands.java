@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
+import com.stoneskies.feudalism.Ruin.RuinedTown;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.command.CommandSender;
 

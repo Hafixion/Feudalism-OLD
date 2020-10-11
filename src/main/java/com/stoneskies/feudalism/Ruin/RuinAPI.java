@@ -91,27 +91,6 @@ public class RuinAPI {
             Bukkit.getConsoleSender().sendMessage(ChatInfo.msg("&7No files found to purge"));
         }
     }
-
-    /**
-     * Checks if town is ruined or not
-     *
-     * @param town town to check if ruined or not
-     * @return Whether town is ruined or not
-     */
-    public static boolean isRuined(Town town) {
-        // name of the file, town.yml
-        String ruinedtownstring = town.getName() + ".yml";
-        // file of the inputted town
-        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
-        ruinedtowndata = new YamlConfiguration();
-        boolean result = false;
-        // if the file exists
-        if (townie.exists()) {
-            result = true;
-        }
-        return result;
-    }
-
     /**
      * Adds a town to the ruined town database
      *
@@ -162,5 +141,33 @@ public class RuinAPI {
         } catch (TownyException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Returns a string if the specified town is ruined, otherwise returns null
+     * @param town town you want to check
+     * @return string
+     */
+    public static RuinedTown getRuinedTown(Town town) {
+        // name of the file, town.yml
+        String ruinedtownstring = town.getName() + ".yml";
+        // file of the inputted town
+        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
+        if(townie.exists()) {
+           return new RuinedTown(town.getName());
+        } else {return null;}
+    }
+    public static boolean isRuined(Town town) {
+        // name of the file, town.yml
+        String ruinedtownstring = town.getName() + ".yml";
+        // file of the inputted town
+        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
+        RuinAPI.ruinedtowndata = new YamlConfiguration();
+        boolean result = false;
+        // if the file exists
+        if (townie.exists()) {
+            result = true;
+        }
+        return result;
     }
 }
