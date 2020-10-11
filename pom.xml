@@ -79,5 +79,11 @@
             <artifactId>Towny</artifactId>
             <version>0.96.2.19</version>
         </dependency>
+        <dependency>
+            <groupId>me.lucko</groupId>
+            <artifactId>commodore</artifactId>
+            <version>1.9</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

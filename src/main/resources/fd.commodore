@@ -1,0 +1,9 @@
+fd {
+  debug {
+    townruin {
+      mayor;
+      purge;
+      purgeexpired;
+    }
+  }
+}

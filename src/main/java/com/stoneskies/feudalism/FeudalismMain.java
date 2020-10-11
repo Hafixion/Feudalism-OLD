@@ -1,10 +1,15 @@
 package com.stoneskies.feudalism;
 
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.stoneskies.feudalism.Commands.Feudalism;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
 import com.stoneskies.feudalism.Util.ChatInfo;
+import me.lucko.commodore.Commodore;
+import me.lucko.commodore.CommodoreProvider;
+import me.lucko.commodore.file.CommodoreFileFormat;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,15 +28,24 @@ public final class FeudalismMain extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7Plugin loaded successfully!"));
         // set the plugin var
         setPlugin(this);
-        registerStuff();
+        try {
+            registerStuff();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7Plugin unloaded successfully"));
     }
-    public void registerStuff() {
+    public void registerCompletions(Commodore commodore, PluginCommand command) throws IOException {
+        LiteralCommandNode<?> fdCommand = CommodoreFileFormat.parse(plugin.getResource("fd.commodore"));
+        commodore.register(command, fdCommand);
+    }
+    public void registerStuff() throws IOException {
         //commands
-        this.getCommand("fd").setExecutor(new Feudalism());
+        PluginCommand command = getCommand("fd");
+        command.setExecutor(new Feudalism());
         //schedules
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L); // schedule for purging expired ruined towns
         //events
@@ -49,6 +63,16 @@ public final class FeudalismMain extends JavaPlugin {
             // delete the configfile and load the default one
             configFile.delete();
             plugin.saveDefaultConfig();
+        }
+        //other
+        // check if brigadier is supported
+        if (CommodoreProvider.isSupported()) {
+
+            // get a commodore instance
+            Commodore commodore = CommodoreProvider.getCommodore(this);
+
+            // register your completions.
+            registerCompletions(commodore, command);
         }
     }
 }
