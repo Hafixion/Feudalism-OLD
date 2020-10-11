@@ -38,6 +38,7 @@ public class DebugRuinCommands {
                     break;
                 default:
                     sender.sendMessage(ChatInfo.msg("&c" + args[0] + " is not registered"));
+                    break;
             }
         } else {
             sender.sendMessage(ChatInfo.msg("&cPlease specify an argument!"));
