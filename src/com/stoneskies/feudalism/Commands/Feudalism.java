@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 public class Feudalism implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // args here: /fd args[0] args[1] args[2]...
         if(label.equalsIgnoreCase("fd")) {
             if(args.length != 0) {
                 switch(args[0]) {

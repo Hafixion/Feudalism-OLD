@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class DebugCommands {
     public static void exec(CommandSender sender, String[] args) {
+        // args here: /fd debug args[1] args[2] args[3]...
         if (!(args.length >= 2)) {
             // not enough arguments, return is required here!
             sender.sendMessage(ChatInfo.msg("&cSpecify debug command!"));
@@ -21,7 +22,7 @@ public class DebugCommands {
 
             default:
                 // debug command invalid
-                sender.sendMessage(ChatInfo.msg("&cInvalid debug command!"));
+                sender.sendMessage(ChatInfo.msg("&c" + args[1] + " is not registered"));
                 break;
         }
         return;

@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 
 public class DebugRuinCommands {
     public static void cmd(CommandSender sender, String[] args) {
+        // args here: /fd debug townruin args[0] args[1] args[2]... since we passed in newargs which is args without the first 2 elements
         boolean result = false;
         if(args.length != 0) {
             switch(args[0]) {
@@ -28,12 +29,12 @@ public class DebugRuinCommands {
                             // return whatever the isRuined() value of said town is.
                             result = RuinAPI.isRuined(town);
                         } catch (NotRegisteredException e) {
-                            e.printStackTrace();
+                            sender.sendMessage(ChatInfo.msg("&cCan't find a mayor with the name " + args[1]));
                         }
                         // send it to the player
                         sender.sendMessage(String.valueOf(result));
                     } else {
-                        sender.sendMessage(ChatInfo.msg("&cSpecify a mayor!"));
+                        sender.sendMessage(ChatInfo.msg("&cPlease specify a mayor!"));
                     }
                     break;
                 default:
