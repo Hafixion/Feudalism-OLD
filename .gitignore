@@ -1,7 +1,3 @@
-out/
-Feudalism.jar
-
-.idea/
-!.idea/artifacts
-!.idea/misc.xml
-!.idea/modules.xml
+.idea/workspace.xml
+target/
+src/test/

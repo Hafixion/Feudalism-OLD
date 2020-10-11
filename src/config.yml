@@ -1,8 +1,0 @@
-# Ruined Town config
-# -------------------
-ruin-enabled: true
-# Whether all permissions are enabled or not in the ruined town
-enable-permissions: true
-# time it takes the town to count as expired.
-time-till-expiration: 86400000
-# --------------------
