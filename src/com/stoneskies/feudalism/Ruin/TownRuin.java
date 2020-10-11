@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.event.PreDeleteTownEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
+import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -61,7 +62,7 @@ public class TownRuin implements Listener {
                 long time = System.currentTimeMillis();
                 // save the ruined town to database
                 RuinAPI.SaveRuinedTown(town, time);
-                Bukkit.broadcastMessage("§6[Feudalism] §7" + town.getName() + " has become a ruined town.");
+                Bukkit.broadcastMessage(ChatInfo.msg("&7" + town.getName() + " has become a ruined town."));
             } else {
                 // if config ruin-enabled is false don't do anything
                 event.setCancelled(false);

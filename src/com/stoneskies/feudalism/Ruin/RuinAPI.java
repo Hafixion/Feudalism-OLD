@@ -6,8 +6,8 @@ import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
+import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -26,6 +26,8 @@ public class RuinAPI {
     /**
      * Purges the entire ruined database.
      */
+
+    //TODO merge PurgeRuinedTowns() and PurgeExpiredRuinedTowns() into one method in the future, since they have a lot of duplicate code
     public static void PurgeRuinedTowns() {
         Path datafolder = Paths.get("plugins/Feudalism/database/ruinedtowns");
         File[] ruinedtowns = datafolder.toFile().listFiles();
@@ -36,7 +38,7 @@ public class RuinAPI {
                 try {
                     ruinedtowndata.load(ruinedtown);
                     try {
-                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism] &7" + ruinedtowndata.get("name") + " has finally fallen into history"));
+                        Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                         // get the npc mayor's name inside the database and get his town, then delete it.
                         deleteTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
                         // clear the file from the database
@@ -50,7 +52,7 @@ public class RuinAPI {
             }
         } else {
             // database is empty, send error.
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));
+            Bukkit.getConsoleSender().sendMessage(ChatInfo.msg("&7No files found to purge"));
         }
     }
 
@@ -70,7 +72,7 @@ public class RuinAPI {
                         // calculate if time passed since fallen if greater than the time till expiration
                         if (System.currentTimeMillis() - time >= FeudalismMain.plugin.getConfig().getLong("time-till-expiration")) {
                             try {
-                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism] &7" + ruinedtowndata.get("name") + " has finally fallen into history"));
+                                Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                                 // delete the town
                                 deleteTown(TownyUniverse.getInstance().getDataSource().getResident(String.valueOf(ruinedtowndata.get("mayor"))).getTown());
                                 // delete the ruined town from the database
@@ -86,7 +88,7 @@ public class RuinAPI {
             }
         } else {
             // no ruined towns found in the database
-            Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 No files found to purge"));
+            Bukkit.getConsoleSender().sendMessage(ChatInfo.msg("&7No files found to purge"));
         }
     }
 

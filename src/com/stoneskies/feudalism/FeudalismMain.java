@@ -3,8 +3,8 @@ package com.stoneskies.feudalism;
 import com.stoneskies.feudalism.Commands.Feudalism;
 import com.stoneskies.feudalism.Ruin.RuinAPI;
 import com.stoneskies.feudalism.Ruin.TownRuin;
+import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,20 +20,19 @@ public final class FeudalismMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "§6[Feudalism]§7 Plugin loaded successfully!"));
+        getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7Plugin loaded successfully!"));
         // set the plugin var
         setPlugin(this);
         registerStuff();
     }
     @Override
     public void onDisable() {
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "§6[Feudalism]§7 Plugin unloaded successfully"));
+        getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7Plugin unloaded successfully"));
     }
     public void registerStuff() {
         //commands
         this.getCommand("fd").setExecutor(new Feudalism());
         //schedules
-
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RuinAPI.ExpiredRuinedTownPurge, 0L, 72000L); // schedule for purging expired ruined towns
         //events
         getServer().getPluginManager().registerEvents(new TownRuin(), this); // register ruined town events
@@ -46,7 +45,7 @@ public final class FeudalismMain extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidConfigurationException e) { // if config is invalid
-            getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[Feudalism]&7 config.yml invalid, loading default config..."));
+            getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7config.yml invalid! loading default config..."));
             // delete the configfile and load the default one
             configFile.delete();
             plugin.saveDefaultConfig();

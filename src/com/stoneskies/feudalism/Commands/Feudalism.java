@@ -1,6 +1,7 @@
 package com.stoneskies.feudalism.Commands;
 
 import com.stoneskies.feudalism.Commands.Debug.DebugCommands;
+import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,13 +15,13 @@ public class Feudalism implements CommandExecutor {
                 switch(args[0]) {
                     case "debug":
                         // set the executor to be the debug commands class
-                        DebugCommands.exec(sender, cmd, label, args);
+                        DebugCommands.exec(sender, args);
                         break;
 
                     default:
                         // argument invalid
-                        sender.sendMessage(ChatColor.RED + args[0] + " is not registered");
-                        return false;
+                        sender.sendMessage(ChatInfo.msg("&c" + args[0] + " is not registered"));
+                        break;
                 }
             } else {
                 // send plugin information
@@ -29,7 +30,6 @@ public class Feudalism implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eAuthors: zydde, Hafixion"));
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&eGithub: https://github.com/Stoneskies/Feudalism"));
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7A plugin that adds complex war to towny"));
-                return true;
             }
         }
         return false;
