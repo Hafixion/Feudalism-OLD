@@ -36,7 +36,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-commons:8.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-tree:8.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-analysis:8.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.github.LlmDl:Towny:0.96.2.19" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.LlmDl:Towny:0.96.2.19" level="project" />
     <orderEntry type="library" name="Maven: me.lucko:commodore:1.9" level="project" />
     <orderEntry type="library" name="Maven: me.lucko:commodore-file:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.mojang:brigadier:1.0.17" level="project" />

@@ -66,7 +66,7 @@ public class RuinAPI {
                 try {
                     ruinedtowndata.load(ruinedtown);
                     if (ruinedtowndata.contains("time-fallen")) {
-                        long time = (long) ruinedtowndata.get("time-fallen");
+                        long time = (int) ruinedtowndata.get("time-fallen");
                         // calculate if time passed since fallen if greater than the time till expiration
                         if (System.currentTimeMillis() - time >= FeudalismMain.plugin.getConfig().getLong("time-till-expiration")) {
                             Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
