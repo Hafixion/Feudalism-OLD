@@ -3,11 +3,11 @@ package com.stoneskies.feudalism.Interfaces;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownyAdminCommand;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import com.stoneskies.feudalism.FeudalismMain;
-import com.stoneskies.feudalism.Objects.RuinedTown;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -42,8 +42,7 @@ public class RuinAPI {
                     ruinedtowndata.load(ruinedtown);
                     Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.getString("name") + " has finally fallen into history"));
                     // process the deletion
-                    RuinedTown ruinedTown = new RuinedTown(ruinedtowndata.getString("name"));
-                    ruinedTown.delete();
+                    RuinAPI.delete(ruinedtowndata.getString("name"));
                 } catch (IOException | InvalidConfigurationException e) {
                     e.printStackTrace();
                 }
@@ -51,6 +50,45 @@ public class RuinAPI {
         } else {
             // database is empty, send error.
             Bukkit.getConsoleSender().sendMessage(ChatInfo.msg("&7No files found to purge"));
+        }
+    }
+    public static void reclaim(Resident resident) {
+        String filename;
+        try {
+            filename = resident.getTown().getName() + ".yml";
+            // check db
+            if (checkDatabase(filename)) {
+                try {
+                    // save the old mayor to memory
+                    Resident mayor = resident.getTown().getMayor();
+                    // set the reclaimer to be the mayor
+                    resident.getTown().setMayor(resident);
+                    try {
+                        // reset permissions to normal
+                        for (String element : new String[]{"outsiderBuild",
+                                "outsiderDestroy", "outsiderSwitch",
+                                "outsiderItemUse", "allyBuild", "allyDestroy",
+                                "allySwitch", "allyItemUse", "nationBuild", "nationDestroy",
+                                "nationSwitch", "nationItemUse",
+                                "pvp", "fire", "explosion", "mobs"}) {
+                            resident.getTown().getPermissions().set(element, false);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    // delete the old mayor from the towny db
+                    TownyAPI.getInstance().getDataSource().deleteResident(mayor);
+                    // set the new board
+                    resident.getTown().setBoard(resident.getTown().getName() + "has returned under the leadership of " + resident.getName());
+
+                } catch (TownyException e) {
+                    e.printStackTrace();
+                }
+                // delete the file in the database
+                ruinedtown.delete();
+            }
+        } catch (NotRegisteredException e) {
+            e.printStackTrace();
         }
     }
 
@@ -71,8 +109,7 @@ public class RuinAPI {
                         if (System.currentTimeMillis() - time >= FeudalismMain.plugin.getConfig().getLong("time-till-expiration")) {
                             Bukkit.broadcastMessage(ChatInfo.msg("&7" + ruinedtowndata.get("name") + " has finally fallen into history"));
                             // process the deletion
-                            RuinedTown ruinedTown = new RuinedTown(ruinedtowndata.getString("name"));
-                            ruinedTown.delete();
+                            RuinAPI.delete(ruinedtowndata.getString("name"));
                         }
                     }
                 } catch (IOException | InvalidConfigurationException e) {
@@ -127,29 +164,15 @@ public class RuinAPI {
      * Deletes specified town
      * @param town Town to delete
      */
-    public static void deleteTown(Town town) {
+    public static void deleteTown(String town) {
         try {
             // delete town specified
-            adminCommand.parseAdminTownCommand(new String[] {town.getName(), "delete"});
+            adminCommand.parseAdminTownCommand(new String[] {town, "delete"});
         } catch (TownyException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Returns a string if the specified town is ruined, otherwise returns null
-     * @param town town you want to check
-     * @return string
-     */
-    public static RuinedTown getRuinedTown(Town town) {
-        // name of the file, town.yml
-        String ruinedtownstring = town.getName() + ".yml";
-        // file of the inputted town
-        File townie = new File("plugins/Feudalism/database/ruinedtowns", ruinedtownstring);
-        if(townie.exists()) {
-           return new RuinedTown(town.getName());
-        } else {return null;}
-    }
     public static boolean isRuined(Town town) {
         // name of the file, town.yml
         String ruinedtownstring = town.getName() + ".yml";
@@ -185,6 +208,21 @@ public class RuinAPI {
                 // delete them
                 TownyAPI.getInstance().getDataSource().deleteResident(resident);
             }
+        }
+    }
+
+    public static void delete(String town) {
+        String filename = town + ".yml";
+        // if database is not empty
+        if (checkDatabase(filename)) {
+            try {
+                // delete the mayor's town
+                deleteTown(TownyUniverse.getInstance().getDataSource().getResident(ruinedtowndata.getString("mayor")).getTown().getName());
+            } catch (NotRegisteredException e) {
+                e.printStackTrace();
+            }
+            // delete the file in the database
+            ruinedtown.delete();
         }
     }
 }
