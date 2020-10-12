@@ -7,5 +7,9 @@ fd {
       purge;
       purgeexpired;
     }
+    clearnpcs;
+  }
+  ruin {
+        reclaim;
   }
 }

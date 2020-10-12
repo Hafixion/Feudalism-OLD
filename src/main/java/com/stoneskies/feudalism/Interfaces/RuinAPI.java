@@ -77,9 +77,10 @@ public class RuinAPI {
                         e.printStackTrace();
                     }
                     // delete the old mayor from the towny db
-                    TownyAPI.getInstance().getDataSource().deleteResident(mayor);
+                    mayor.removeTown();
+                    RuinAPI.clearresidentNPCs();
                     // set the new board
-                    resident.getTown().setBoard(resident.getTown().getName() + "has returned under the leadership of " + resident.getName());
+                    resident.getTown().setBoard(resident.getTown().getName() + " has returned under the leadership of " + resident.getName());
 
                 } catch (TownyException e) {
                     e.printStackTrace();
@@ -206,7 +207,7 @@ public class RuinAPI {
             // if resident is npc
             if(resident.isNPC()) {
                 // delete them
-                TownyAPI.getInstance().getDataSource().deleteResident(resident);
+                TownyAPI.getInstance().getDataSource().removeResident(resident);
             }
         }
     }
@@ -223,6 +224,23 @@ public class RuinAPI {
             }
             // delete the file in the database
             ruinedtown.delete();
+        }
+    }
+
+    public static void clearresidentNPCs() {
+        // get a list of the residents in the towny db
+        List<Resident> residentList = TownyUniverse.getInstance().getDataSource().getResidents();
+        // get an array out of the above list
+        Resident[] residents = residentList.toArray(new Resident[0]);
+        for(Resident resident : residents) {
+            // if resident is npc
+            if(resident.isNPC()) {
+                // if resident is mayor
+                if (!resident.isMayor()) {
+                    // delete them
+                    TownyAPI.getInstance().getDataSource().removeResident(resident);
+                }
+            }
         }
     }
 }

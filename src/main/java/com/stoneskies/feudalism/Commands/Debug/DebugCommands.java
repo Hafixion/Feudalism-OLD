@@ -1,5 +1,6 @@
 package com.stoneskies.feudalism.Commands.Debug;
 
+import com.stoneskies.feudalism.Interfaces.RuinAPI;
 import com.stoneskies.feudalism.Util.ChatInfo;
 import org.bukkit.command.CommandSender;
 
@@ -18,6 +19,11 @@ public class DebugCommands {
             case "townruin":
                 // set the executor to be the debug ruin commands
                 DebugRuinCommands.cmd(sender, newargs);
+                break;
+
+            case "npcclear":
+                RuinAPI.clearresidentNPCs();
+                sender.sendMessage(ChatInfo.msg("Task Executed."));
                 break;
 
             default:

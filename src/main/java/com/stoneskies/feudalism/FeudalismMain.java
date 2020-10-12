@@ -5,12 +5,12 @@ import com.stoneskies.feudalism.Commands.Feudalism;
 import com.stoneskies.feudalism.Interfaces.RuinAPI;
 import com.stoneskies.feudalism.Listeners.RuinListener;
 import com.stoneskies.feudalism.Util.ChatInfo;
+import com.stoneskies.feudalism.Util.ConfigLoad;
 import me.lucko.commodore.Commodore;
 import me.lucko.commodore.CommodoreProvider;
 import me.lucko.commodore.file.CommodoreFileFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -51,20 +51,9 @@ public final class FeudalismMain extends JavaPlugin {
 
         //events
         getServer().getPluginManager().registerEvents(new RuinListener(), this); // register ruined town events
+        RuinAPI.clearresidentNPCs(); // clear all non-mayor npcs
         //config and settings
-        if(!configFile.exists()) {
-            plugin.saveDefaultConfig();  // if it doesn't exist, save the default one
-        }
-        try {
-            plugin.getConfig().load(configFile); // load the config
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) { // if config is invalid
-            getServer().getConsoleSender().sendMessage(ChatInfo.msg("&7config.yml invalid! loading default config..."));
-            // delete the configfile and load the default one
-            configFile.delete();
-            plugin.saveDefaultConfig();
-        }
+        ConfigLoad.LoadConfig();
         //other
         // check if brigadier is supported
         if (CommodoreProvider.isSupported()) {

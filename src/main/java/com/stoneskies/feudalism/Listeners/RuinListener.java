@@ -19,6 +19,7 @@ public class RuinListener implements Listener {
     @EventHandler
     public void onTownDelete(PreDeleteTownEvent event) {
         town = event.getTown();
+        RuinAPI.clearresidentNPCs();
         // if ruined towns in config are enabled
         if(FeudalismMain.plugin.getConfig().getBoolean("ruin-enabled")) {
             // if the mayor is npc, helps with ruined town purge
