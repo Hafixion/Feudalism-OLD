@@ -31,7 +31,7 @@ public class RuinCommands {
                                     // see if the resident's town is ruined
                                     if (RuinAPI.isRuined(resident.getTown())) {
                                         // create a new ruinedtown obj
-                                        ruinedTown = new RuinedTown(resident.getTown());
+                                        ruinedTown = new RuinedTown(resident.getTown().getName());
                                         // reclaim the town under the resident's name
                                         ruinedTown.reclaim(resident);
                                         resident.getPlayer().sendMessage(ChatInfo.msg("&7Town reclaimed, lead it into a better era."));

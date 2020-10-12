@@ -104,7 +104,7 @@ public class RuinedTown {
                 // save the old mayor to memory
                 Resident mayor = resident.getTown().getMayor();
                 // set the reclaimer to be the mayor
-                resident.getTown().forceSetMayor(resident);
+                resident.getTown().SetMayor(resident);
                 try {
                     // reset permissions to normal
                     for (String element : new String[]{"outsiderBuild",
@@ -118,8 +118,6 @@ public class RuinedTown {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // kick the old mayor
-                mayor.removeTown();
                 // delete the old mayor from the towny db
                 TownyAPI.getInstance().getDataSource().deleteResident(mayor);
                 // set the new board
