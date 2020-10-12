@@ -1,0 +1,12 @@
+name: Feudalism
+version: 0.00.010
+authors: [Hafixion, zydde]
+website: https://stoneskies.com
+depend:
+  - Towny
+api-version: 1.16
+main: com.stoneskies.feudalism.FeudalismMain
+
+commands:
+  fd:
+    description: The base Feudalism command

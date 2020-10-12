@@ -1,0 +1,15 @@
+fd {
+  debug {
+    townruin {
+      mayor {
+        player brigadier:string single_word;
+      }
+      purge;
+      purgeexpired;
+    }
+    clearnpcs;
+  }
+  ruin {
+        reclaim;
+  }
+}

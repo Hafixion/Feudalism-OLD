@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Feudalism.iml" filepath="$PROJECT_DIR$/Feudalism.iml" />
+      <module fileurl="file://$PROJECT_DIR$/feudalism.iml" filepath="$PROJECT_DIR$/feudalism.iml" />
     </modules>
   </component>
 </project>

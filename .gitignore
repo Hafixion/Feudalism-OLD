@@ -1,5 +1,8 @@
-out/
-Feudalism.jar
-.idea/uiDesigner.xml
+.idea/workspace.xml
+target/
+src/test/
+.idea/vcs.xml
 
-.idea/
+Feudalism.iml
+
+.idea/uiDesigner.xml
